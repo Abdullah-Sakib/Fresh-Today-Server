@@ -42,7 +42,7 @@ async function run() {
         const result = await categoriesCollection.find(query).toArray();
         res.send(result);
     })
-
+    
   } finally {
   }
 }
