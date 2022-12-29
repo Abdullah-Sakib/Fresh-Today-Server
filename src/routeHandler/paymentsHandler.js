@@ -12,13 +12,14 @@ const is_live = false //true for live, false for sandbox
 router.post("/", async (req, res) => {
   const orderInfo = req.body;
   // ssl commerz init
+  const tranId = new ObjectId().toString()
   const data = {
     total_amount: orderInfo.price,
     currency: 'BDT',
-    tran_id: new ObjectId().toString(), // use unique tran_id for each api call
-    success_url: 'http://localhost:3030/success',
-    fail_url: 'http://localhost:3030/fail',
-    cancel_url: 'http://localhost:3030/cancel',
+    tran_id: tranId, // use unique tran_id for each api call
+    success_url: `${process.env.SERVER_URL}/payment/success?transactionId=${tranId}`,
+    fail_url: `${process.env.SERVER_URL}/payment/failed?transactionId=${tranId}`,
+    cancel_url: `http://localhost:5000/payment/cancel?transactionId=${tranId}`,
     ipn_url: 'http://localhost:3030/ipn',
     shipping_method: 'Courier',
     product_name: 'Computer.',
@@ -49,6 +50,15 @@ router.post("/", async (req, res) => {
     let GatewayPageURL = apiResponse.GatewayPageURL
     res.send({ url: GatewayPageURL })
   });
+
+  router.post('/success', async (req, res) => {
+    const { transactionId } = req.query;
+    res.redirect(`${process.env.CLIENT_URL}/payment/success?transactionId=${transactionId}`)
+  })
+
+  router.post('/failed', async (req, res) => {
+    res.redirect(`${process.env.CLIENT_URL}/payment/failed`)
+  })
 })
 module.exports = router;
 
