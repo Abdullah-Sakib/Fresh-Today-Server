@@ -1,8 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const SSLCommerzPayment = require('sslcommerz-lts')
-require("dotenv").config();
+const SSLCommerzPayment = require('sslcommerz-lts');
+const { default: mongoose } = require("mongoose");
+require("dotenv").config({ path: '.env.example' });
 const port = process.env.PORT || 5000;
 
 // ssl commerz intregation by ankan
@@ -14,8 +15,17 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+mongoose.set('strictQuery', true);
+// mongoose.connect(process.env.MONGO_URL,{
+//     useNewUrlParser:true,
+//     useUnifiedTopology:true,
+//    }).then(() => {
+//       console.log("DB Connection Successfull");
+//     });
 // mongodb database
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.bydhqyw.mongodb.net/?retryWrites=true&w=majority`;
+
+
 
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
@@ -29,6 +39,7 @@ async function run() {
       .db("freshDb")
       .collection("productsCollections");
     const categoriesCollection = client.db("freshDb").collection("categorises");
+    const chatCollection = client.db("freshDb").collection("chat");
 
     app.get("/products", async (req, res) => {
       const query = {};
@@ -98,6 +109,8 @@ async function run() {
       res.send(result);
     })
 
+   
+
   } finally {
   }
 }
@@ -109,4 +122,5 @@ app.get("/", async (req, res) => {
 
 app.listen(port, () => {
   console.log(`the fresh today server is running on ${port}`);
+  console.log(uri);
 });
