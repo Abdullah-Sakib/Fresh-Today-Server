@@ -41,7 +41,6 @@ router.get('/', (req, res) => {
 
     // LOGIN
     router.post('/login', async (req, res) => {
-        console.log(req.body);
         const email = req.body.userEmail;
         const user = await User.find({email: email});
         if(user == null){
@@ -49,10 +48,9 @@ router.get('/', (req, res) => {
         }
         else{
             const isValidPassword = await bcrypt.compare(req.body.userPassword, user[0].password);
-            console.log(isValidPassword);
             if(isValidPassword){
                 const token = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'});
-                res.send({user, accessToken: token});
+                res.send({user: user[0], accessToken: token});
             }
             else{
                 res.status(401).send('Authentication failed');
