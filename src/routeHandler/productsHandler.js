@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 
 router.get('/:name', (req, res) => {
     const name = req.params.name;
-    Product.find({category: name}, (err, data) => {
+    Product.find({productName: name}, (err, data) => {
         if (err) {
             res.status(500).send(err);
         } else {
