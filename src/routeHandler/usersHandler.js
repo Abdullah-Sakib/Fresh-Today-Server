@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
         const user = await User.find({email: email});
         const userInfo = {email: user[0].email, username: user[0].username, role: user[0].role};
         if(user == null){
-            res.status(401).send('Authentication failed');
+            res.status(401).json('Authentication failed: user not found');
         }
         else{
             const isValidPassword = await bcrypt.compare(req.body.userPassword, user[0].password);
@@ -54,7 +54,7 @@ router.get('/', (req, res) => {
                 res.send({user: userInfo, accessToken: token});
             }
             else{
-                res.status(401).send('Authentication failed');
+                res.status(401).json('Authentication failed: invalid password');
             }
         }
     });
