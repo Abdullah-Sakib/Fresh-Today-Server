@@ -44,7 +44,7 @@ router.get('/', (req, res) => {
         const email = req.body.userEmail;
         const user = await User.find({email: email});
         if(user == null){
-            res.status(401).send('Authentication failed');
+            res.status(401).json('Authentication failed');
         }
         else{
             const isValidPassword = await bcrypt.compare(req.body.userPassword, user[0].password);
@@ -53,7 +53,7 @@ router.get('/', (req, res) => {
                 res.send({user: user[0], accessToken: token});
             }
             else{
-                res.status(401).send('Authentication failed');
+                res.status(401).json('Authentication failed');
             }
         }
     });
