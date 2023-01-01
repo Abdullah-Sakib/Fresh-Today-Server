@@ -27,9 +27,9 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/:conversationId', (req, res) => {
-    const conversationId = req.params.conversationId;
-    Chat.find({conversationId:conversationId},(err, data) => {
+router.get('/:senderId', (req, res) => {
+    const senderId = req.params.senderId;    ;
+    Chat.find({senderId : senderId},(err, data) => {
         if (err) {
             res.status(500).send(err);
         } else {

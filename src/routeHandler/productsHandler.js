@@ -26,9 +26,9 @@ router.post('/', (req, res) => {
     });
 });
 
-router.get('/:name', (req, res) => {
-    const name = req.params.name;
-    Product.find({category: name}, (err, data) => {
+router.get('/:productName', (req, res) => {
+    const productName = req.params.productName;
+    Product.find({productName: productName}, (err, data) => {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -36,5 +36,18 @@ router.get('/:name', (req, res) => {
         }
     });
 });
+router.get('/productName/:id', (req, res) => {
+    const id = req.params.id;
+    Product.find({_id: id}, (err, data) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.status(200).send(data);
+        }
+    });
+});
+
+
+
 
 module.exports = router;
