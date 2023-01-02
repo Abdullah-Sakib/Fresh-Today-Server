@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
     role: user[0].role,
   };
   if (user == null) {
-    res.status(401).json("Authentication failed: user not found");
+    res.status(401).json("User not found");
   } else {
     const isValidPassword = await bcrypt.compare(
       req.body.userPassword,
@@ -79,7 +79,7 @@ router.post("/login", async (req, res) => {
       });
       res.send({ user: userInfo, accessToken: token });
     } else {
-      res.status(401).json("Authentication failed: invalid password");
+      res.status(401).json("Invalid password");
     }
   }
 });
