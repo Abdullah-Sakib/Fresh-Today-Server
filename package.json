@@ -20,5 +20,9 @@
     "mongodb": "^4.13.0",
     "mongoose": "^6.8.1",
     "sslcommerz-lts": "^1.1.0"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.7",
+    "utf-8-validate": "^5.0.10"
   }
 }
