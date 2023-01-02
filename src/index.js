@@ -6,6 +6,8 @@ const productsHandler = require("./routeHandler/productsHandler");
 const categoriesHandler = require("./routeHandler/categoriesHandler");
 const paymentsHandler = require("./routeHandler/paymentsHandler");
 const usersHandler = require("./routeHandler/usersHandler");
+const chatsHandler = require("./routeHandler/chatHandler");
+const conversationsHandler =  require("./routeHandler/conversationHandler");
 
 // Middleware
 const app = express();
@@ -20,6 +22,9 @@ app.use("/products", productsHandler);
 app.use("/categories", categoriesHandler);
 app.use("/payment", paymentsHandler);
 app.use("/user", usersHandler);
+app.use("/chats", chatsHandler);
+app.use("/conversation",conversationsHandler);
+
 
 app.get("/", async (req, res) => {
   res.send("the fresh today server is running");
