@@ -47,7 +47,6 @@ router.post("/", async (req, res) => {
   const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live)
   sslcz.init(data).then(apiResponse => {
     // Redirect the user to payment gateway
-    console.log(apiResponse)
     let GatewayPageURL = apiResponse.GatewayPageURL
     res.send({ url: GatewayPageURL })
   });
