@@ -43,18 +43,18 @@ router.get('/', (req, res) => {
     router.post('/login', async (req, res) => {
         const email = req.body.userEmail;
         const user = await User.find({email: email});
-        const userInfo = {email: user[0].email, username: user[0].username, role: user[0].role};
-        if(user == null){
-            res.status(401).json('Authentication failed: user not found');
+        if(user.length == 0){
+            res.status(401).json('User not found');
         }
         else{
             const isValidPassword = await bcrypt.compare(req.body.userPassword, user[0].password);
             if(isValidPassword){
+                const userInfo = {email: user[0].email, username: user[0].username, role: user[0].role};
                 const token = jwt.sign({email}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '1d'});
                 res.send({user: userInfo, accessToken: token});
             }
             else{
-                res.status(401).json('Authentication failed: invalid password');
+                res.status(401).json('Invalid Password');
             }
         }
     });
