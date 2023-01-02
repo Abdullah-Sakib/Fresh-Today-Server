@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
 
 router.get('/:name', (req, res) => {
     const name = req.params.name;
-    Product.find({productName: name}, (err, data) => {
+    Product.find({ productName: name }, (err, data) => {
         if (err) {
             res.status(500).send(err);
         } else {
@@ -36,6 +36,19 @@ router.get('/:name', (req, res) => {
         }
     });
 });
+
+
+router.get('/category/:name', (req, res) => {
+    const name = req.params.name;
+    Product.find({ category: name }, (err, data) => {
+        if (err) {
+            res.status(500).send(err);
+        }
+        else {
+            res.status(200).send(data)
+        }
+    })
+})
 
 router.get('/vendor/:email', (req, res) => {
     const email = req.params.email;
@@ -47,5 +60,6 @@ router.get('/vendor/:email', (req, res) => {
         }
     });
 });
+
 
 module.exports = router;
