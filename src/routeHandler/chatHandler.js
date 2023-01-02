@@ -15,7 +15,6 @@ const Chat = mongoose.model("chats", chatSchema);
 // });
 
 router.post('/', (req, res) => {
-    console.log(req.body)
     const chat = req.body;
     const newChat = new Chat(chat);
     newChat.save((err, data) => {
@@ -26,6 +25,7 @@ router.post('/', (req, res) => {
         }
     });
 });
+
 
 router.get('/:conversationId', (req, res) => {
     const conversationId = req.params.conversationId;
