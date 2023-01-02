@@ -25,6 +25,7 @@ const productSchema = new mongoose.Schema({
         default: Date.now,
     },
     vendorName: String,
+    vendorEmail: String
 });
 
 module.exports = productSchema;
